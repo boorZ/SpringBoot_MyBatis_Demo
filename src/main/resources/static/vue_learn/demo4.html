@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo4_v-no</title>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- v-bind：用于绑定 html 属性 -->
+    <div id="demo4">
+        <button v-on="{mouseenter:onEnter, mouseleave: onOut}" v-on:click="onClick">点我</button>
+        <!-- v-on:submit.stop : 停止冒泡事件。 -->
+        <form v-on:keyup:enter="onKeyUpEnter" v-on:submit.prevent="onSubmit">
+            <input type="text" />
+            <button type="submit"> 提交</button>
+        </form>
+        <!-- @是v-on:的简写。效果一样。 -->
+        <form @keyup="onKeyUp">
+            <input type="text" />
+            <button type="submit"> 提交</button>
+        </form>
+    </div>
+
+<script src="js/vue.js"></script>
+<script>
+    var demo4 = new Vue({
+        el:"#demo4",
+        methods:{
+            onClick:function () {
+                console.log("我被你点击了！");
+            },
+            onEnter:function() {
+                console.log("鼠标移到我身上了！");
+            },
+            onOut:function() {
+                console.log("鼠标离开我身上了！");
+            },
+            onSubmit:function(e) {
+                // 禁止提交刷新
+                e.preventDefault();
+                console.log("表单提交了！");
+            },
+            onKeyUp:function() {
+                console.log("键盘输入了1！");
+            },
+            onKeyUpEnter:function() {
+                console.log("键盘输入了2！");
+            }
+        }
+    });
+</script>
+</body>
+</html>

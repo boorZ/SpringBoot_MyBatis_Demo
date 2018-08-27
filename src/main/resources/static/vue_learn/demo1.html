@@ -12,7 +12,13 @@
             <span v-show="name">名字：{{name}}</span>
         </div>
         <div>
-            <input type="text" v-model="age" />
+            <!--
+                v-model 修饰符
+                    1、lazy : 惰性更新。
+                    2、trim : 去除空格
+                    3、number : 自动转化为一个数字类型。
+             -->
+            <input type="text" v-model.lazy="age" />
             <span v-if="age">年龄：{{age}}</span>
             <span v-else="age" style="color: red;">请输入年龄！</span>
         </div>

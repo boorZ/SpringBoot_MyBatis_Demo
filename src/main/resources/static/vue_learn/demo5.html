@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo5_计算属性</title>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- v-bind：用于绑定 html 属性 -->
+    <div id="demo5">
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>学课</td>
+                    <td>成绩</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>数学</td>
+                    <td><input type="text" v-model.number="math1"></td>
+                </tr>
+                <tr>
+                    <td>英语</td>
+                    <td><input type="text" v-model.number="math2"></td>
+                </tr>
+                <tr>
+                    <td>语文</td>
+                    <td><input type="text" v-model.number="math3"></td>
+                </tr>
+                <tr>
+                    <td>总分</td>
+                    <td>{{sum}}</td>
+                </tr>
+                <tr>
+                    <td>平均分</td>
+                    <td>{{average}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<script src="js/vue.js"></script>
+<script>
+    var demo5 = new Vue({
+        el:"#demo5",
+        data:{
+            math1:1,
+            math2:2,
+            math3:3
+        },
+        computed:{
+            sum : function(){
+                return this.math1 + this.math2 + this.math3;
+            },
+            average : function () {
+                return Math.round(this.sum / 3) ;
+            }
+        }
+    });
+</script>
+</body>
+</html>
