@@ -20,7 +20,7 @@ public class UserController {
 
     @RequestMapping("hello")
     public String hellos(){
-        return "YES";
+        return "index3";
     }
 
     @PutMapping(value = "/findSaveAndFlush")
