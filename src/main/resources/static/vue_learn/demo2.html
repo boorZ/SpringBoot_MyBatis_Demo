@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo2_v-for</title>
+</head>
+<body>
+    <div id="demo2">
+        <span v-for="food in foodList">
+            我的名字是：{{food.name}}，
+            年龄：{{food.age ? food.age+'岁' : '未知'}}<br>
+        </span>
+    </div>
+
+<script src="js/vue.js"></script>
+<script>
+    var demo2 = new Vue({
+        el:"#demo2",
+        data:{
+            // foodList: ['A','B','C']
+            foodList: [
+                {
+                    name:"A",
+                    age:1
+                },
+                {
+                    name:"B",
+                    age:2
+                },
+                {
+                    name:"C",
+                },
+            ]
+        }
+    });
+</script>
+</body>
+</html>

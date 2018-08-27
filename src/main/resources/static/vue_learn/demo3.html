@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo3_v-bind</title>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- v-bind：用于绑定 html 属性 -->
+    <div id="demo3">
+        <a v-bind:href="src">点我1</a><br>
+        <a :href="src">点我2</a><br>
+        <!-- v-bind: 与 : 效果是一样的。 :是v-bind:的简写。 -->
+
+        <a :class="{active: isActive}" :href="src">点我3</a>
+    </div>
+
+<script src="js/vue.js"></script>
+<script>
+    var demo3 = new Vue({
+        el:"#demo3",
+        data:{
+            src:'http://www.baidu.com',
+            isActive:true
+        }
+    });
+</script>
+</body>
+</html>

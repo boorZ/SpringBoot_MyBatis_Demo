@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo1_数据双向绑定</title>
+</head>
+<body>
+    <div id="hello">
+        <div>
+            <!-- v-model指令在表单 <input>、<textarea> 及 <select> 元素上创建双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。  -->
+            <input type="text" v-model="name" >
+            <span v-show="name">名字：{{name}}</span>
+        </div>
+        <div>
+            <input type="text" v-model="age" />
+            <span v-if="age">年龄：{{age}}</span>
+            <span v-else="age" style="color: red;">请输入年龄！</span>
+        </div>
+        <!--
+            v-show
+                不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+            v-if
+                1、是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+                2、也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+            总结：
+                一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。
+        -->
+    </div>
+
+
+<script src="js/vue.js"></script>
+<script>
+    var hellos = new Vue({
+        el:'#hello',
+        data:{
+            name:1,
+            age:null
+        }
+    });
+</script>
+</body>
+</html>
