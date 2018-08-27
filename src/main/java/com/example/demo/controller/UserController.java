@@ -23,27 +23,28 @@ public class UserController {
         return "YES";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/findSaveAndFlush", method = RequestMethod.PUT)
+    @PutMapping(value = "/findSaveAndFlush")
     public void put(User user){
         userService.saveAndFlush(user);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/findById", method = RequestMethod.GET)
-    public User get(Integer id){
+    @PostMapping("/addone")
+    public void add(User user){
+        userService.saveAndFlush(user);
+    }
+
+    @GetMapping("/findone/{id}")
+    public User get(@PathVariable("id") Integer id){
         return userService.findById(id);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/findAll")
     public List<User> gets(){
         return  userService.findAll();
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/deleteById", method = RequestMethod.DELETE)
-    public void del(Integer id){
+    @DeleteMapping(value = "/deleteone/{id}")
+    public void del(@PathVariable("id") Integer id){
         userService.deleteById(id);
     }
 }
