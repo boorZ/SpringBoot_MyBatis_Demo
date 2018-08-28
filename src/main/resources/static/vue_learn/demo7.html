@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo7_配置组件</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo7">
+        <like></like>
+    </div>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('like',{
+        template: '<button :class="{bg_color:is_like}" type="button" @click="on_click">当前点赞数：{{sums}}</button>',
+        data :function () {
+            return {
+                sums : 2,
+                is_like:false
+            }
+        },
+        methods:{
+            on_click:function () {
+                // console.log("点了一下!");
+                if(!this.is_like) {
+                    this.sums++;
+                }else {
+                    this.sums--;
+                }
+                // 赋值：取相反的值
+                this.is_like = !this.is_like;
+            }
+        }
+    });
+    new Vue({
+        el: '#demo7'
+    });
+</script>
+</body>
+</html>

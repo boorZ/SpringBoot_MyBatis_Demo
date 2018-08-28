@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo6_全局及局部组件</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+<div id="demo6">
+    <logs tests="Vues" msg="测试"></logs>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    //  全局
+    // Vue.component('logs',{
+    //     template:'<button @click="on_click">点我</button>',
+    //     methods: {
+    //         on_click:function () {
+    //             console.log("被点击！");
+    //         }
+    //     }
+    // });
+
+    // 封装
+    var logs_components = {
+        template: '<button @click="on_click">点我</button>',
+        props:['msg','tests'],
+        methods: {
+            on_click: function () {
+                console.log(this.msg);
+                alert(this.msg+""+this.tests)
+            }
+        }
+    };
+    new Vue({
+        el: "#demo6",
+        // 局部
+        components: {
+            'logs': logs_components,
+        },
+
+    });
+    /**
+     * component不能使用实例的data ，但是可以在component 使用data 声明变量，data的使用只能使用函数形式
+     */
+</script>
+</body>
+</html>

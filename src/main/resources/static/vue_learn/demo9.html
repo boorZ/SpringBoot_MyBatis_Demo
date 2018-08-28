@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo9_子父通信</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo9">
+        <balance></balance>
+    </div>
+<script src="js/vue.js"></script>
+<script>
+
+    var balance_components = {
+        template: '<div><show></show></div>',
+    };
+    Vue.component('show',{
+        template: '<button @click="on_ck" type="button">查询余额</button>',
+        methods:{
+            on_ck() {
+                console.log("123213");
+            }
+        }
+    });
+    new Vue({
+        el: "#demo9",
+        // 局部
+        components: {
+            'balance': balance_components,
+        },
+
+    });
+    /**
+     * component不能使用实例的data ，但是可以在component 使用data 声明变量，data的使用只能使用函数形式
+     */
+</script>
+</body>
+</html>

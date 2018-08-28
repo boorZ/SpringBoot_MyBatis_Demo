@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo8_父子通信</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+<div id="demo8">
+    注意观察链接。<br>
+    <logs z="123123213213"></logs>
+</div>
+<script src="js/vue.js"></script>
+<script>
+
+    var logs_components = {
+        template: '<a :href="\'/链接/\'+z">{{z}}</a>',
+        props:['z'],
+        methods: {
+            on_click: function () {
+                console.log(this.z);
+            }
+        }
+    };
+    new Vue({
+        el: "#demo8",
+        // 局部
+        components: {
+            'logs': logs_components,
+        },
+
+    });
+    /**
+     * component不能使用实例的data ，但是可以在component 使用data 声明变量，data的使用只能使用函数形式
+     */
+</script>
+</body>
+</html>
