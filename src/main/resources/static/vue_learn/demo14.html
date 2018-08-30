@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo14_混合mixins</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo14">
+        <click_test></click_test>
+        <mouse_test></mouse_test>
+    </div>
+
+<script src="js/vue.js"></script>
+<script>
+    var base = {
+        methods : {
+            show(){
+                this.mixins_if = true;
+            },
+            hide(){
+                this.mixins_if = false;
+            },
+        },
+        data : function(){
+            return {
+                mixins_if: false,
+            }
+        }
+    };
+    Vue.component('click_test',{
+        template: `
+        <div>
+            <button @click="show">点击显示/隐藏</button>
+            <div v-if="mixins_if">
+                <span @click="hide">Close</span>
+                <h1>123</h1>asdfdasfasdfds
+            </div>
+        </div>`,
+        mixins : [base],
+
+    });
+
+    Vue.component('mouse_test',{
+        template: `
+        <div>
+            <h1 @mouseenter="show" @mouseleave="hide">移入显示/移出隐藏</h1>
+            <div v-if="mixins_if">
+                <h1>123</h1>asdfdasfasdfds
+            </div>
+        </div>`,
+        mixins : [base],
+    });
+
+    new Vue({
+        el: "#demo14",
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo11_过滤器</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo11">
+        <div>
+            <input type="text" v-model="values" />mm <br>
+            {{values | key('mm_m')}}
+        </div>
+        <hr>
+        <div>
+            <input type="text" v-model="price" />
+            {{price | currency}}
+        </div>
+    </div>
+<script src="js/vue.js"></script>
+<script>
+    Vue.filter("key",function(val,unit){
+        val = val || 0;
+        unit = unit || 'm';
+        return (val/1000).toFixed(2)+unit;
+    });
+    Vue.filter("currency",function(price){
+        price = price || 0;
+        return price+"元";
+    });
+    new Vue({
+        el: "#demo11",
+        data : {
+            price : null,
+            values : null,
+        },
+    });
+    /**
+     * component不能使用实例的data ，但是可以在component 使用data 声明变量，data的使用只能使用函数形式
+     */
+</script>
+</body>
+</html>

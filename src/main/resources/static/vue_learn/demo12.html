@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo12_自定义指令</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo12">
+        <div class="zdy" v-pin="car1">
+            <button type="button" @click="car1 = !car1">锁定/取消</button>
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy" v-pin="car2" @click="car2 = !car2">
+            11daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+        <div class="zdy">
+            daadfsadfjdsklfjoijwklffjklsjdfklskldfjokewj
+        </div>
+    </div>
+<script src="js/vue.js"></script>
+<script>
+    // 自定义指令
+    Vue.directive('pin', function(el, binding){
+        // console.log(el);
+        console.log(binding.value);
+        if (binding.value) {
+            el.style.position = 'fixed';
+            el.style.background = 'red';
+        }else{
+            el.style.position = 'static';
+            el.style.background = '';
+        }
+    });
+    new Vue({
+        el: "#demo12",
+        data:{
+            car1: false,
+            car2: false,
+        },
+    });
+</script>
+</body>
+</html>

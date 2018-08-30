@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo10_平行组件通信</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo10">
+        <aa></aa>
+        <bb></bb>
+    </div>
+<script src="js/vue.js"></script>
+<script>
+
+    // 事件的调度计
+    var Event = new Vue();
+    var zl;
+    Vue.component('aa',{
+        template: '<div>说：<input type="text" v-model="is_aa" @keyup="on_keyup" /></div>',
+        data : function () {
+            return {
+                is_aa : null,
+            }
+        },
+        methods:{
+            on_keyup(){
+                // console.log(this.is_aa);
+                zl = this.is_aa;
+                Event.$emit("is_aa_something", this.is_aa)
+            }
+        }
+    });
+    Vue.component('bb',{
+        template: '<div>听：{{is_bb}}</div>',
+        data : function () {
+            return {
+                is_bb : null,
+            }
+        },
+        mounted:function(){
+            var me = this;
+            Event.$on('is_aa_something', function (data){
+                console.log(data);
+                me.is_bb = data;
+            });
+        }
+    });
+    new Vue({
+        el: "#demo10",
+    });
+    /**
+     * component不能使用实例的data ，但是可以在component 使用data 声明变量，data的使用只能使用函数形式
+     */
+</script>
+</body>
+</html>
