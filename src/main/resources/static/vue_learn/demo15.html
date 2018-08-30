@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo15_插槽slots</title>
+    <style type="text/css">
+        @import "css/vue.css";
+    </style>
+</head>
+<body>
+    <div id="demo15">
+        <panels>
+            <div slot="title">123213</div>
+            <div slot="con">asjgasdhjgodaskjgj顶替枯枯井厅辊革地苛大都是耍花枪朝秦暮楚asjgasdhjgodaskjgj顶替枯枯井厅辊革地苛大都是耍花枪朝秦暮楚asjgasdhjgodaskjgj顶替枯枯井厅辊革地苛大都是耍花枪朝秦暮楚顶替枯枯井厅辊革地苛大都是耍花枪朝秦暮楚 墁碴地</div>
+        </panels>
+    </div>
+
+<template id="panel-tpl">
+    <div class="panel">
+        <div class="titles"><slot name="title">YoYOYoYo</slot></div>
+        <div class="cons"><slot name="con">内容</slot></div>
+        <div class="footers"><slot name="footer">更多信息</slot></div>
+    </div>
+</template>
+<script src="js/vue.js"></script>
+<script>
+    Vue.component('panels',{
+        template: '#panel-tpl',
+    });
+    new Vue({
+        el: "#demo15",
+    });
+</script>
+</body>
+</html>

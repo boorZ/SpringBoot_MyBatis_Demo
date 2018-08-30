@@ -1,3 +1,29 @@
 .active {
     color: red;
 }
+.bg_color {
+    background: red;
+}
+.zdy {
+    background: aqua;
+    margin: 100px;
+    width: 500px;
+}
+
+/** demo15  */
+.panel{
+    border: 1px solid red;
+    max-width: 200px;
+}
+/**
+   .panel > * ：代表panel下所有的子元素
+ */
+.panel > * {
+    padding: 15px;
+}
+.panel .cons{
+    border-top: 1px solid red;
+}
+.panel .footers{
+    border-top: 1px solid red;
+}
