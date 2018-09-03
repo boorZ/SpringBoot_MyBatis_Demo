@@ -33,8 +33,8 @@ public class UserController {
         userService.saveAndFlush(user);
     }
 
-    @GetMapping("/findone/{id}")
-    public User get(@PathVariable("id") Integer id){
+    @GetMapping("/findone")
+    public User get(Integer id){
         return userService.findById(id);
     }
 
@@ -43,8 +43,8 @@ public class UserController {
         return  userService.findAll();
     }
 
-    @DeleteMapping(value = "/deleteone/{id}")
-    public void del(@PathVariable("id") Integer id){
+    @DeleteMapping(value = "/deleteone")
+    public void del(Integer id){
         userService.deleteById(id);
     }
 }
