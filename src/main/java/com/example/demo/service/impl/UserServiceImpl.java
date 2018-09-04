@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.example.type.utils.ZlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +26,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveAndFlush(User user) {
+    public ZlUtils saveAndFlush(User user) {
         if(user.getId() == null){
+            System.out.println("ADD");
             userMapper.save(user);
+            return ZlUtils.Success(null);
         }else{
+            System.out.println("PUU");
             userMapper.flush(user);
+            return ZlUtils.Success(null);
         }
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public ZlUtils deleteById(Integer id) {
         userMapper.deleteById(id);
+        return ZlUtils.Success(null);
     }
 
 }

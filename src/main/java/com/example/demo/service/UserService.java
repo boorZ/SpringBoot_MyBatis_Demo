@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.User;
+import com.example.type.utils.ZlUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface UserService {
 
     User findById(Integer id);
 
-    void saveAndFlush (User user);
+    ZlUtils saveAndFlush (User user);
 
-    void deleteById (Integer id);
+    ZlUtils deleteById (Integer id);
 }

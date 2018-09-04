@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.example.type.utils.ZlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,8 @@ public class UserController {
     }
 
     @PostMapping("/addone")
-    public void add(User user){
-        userService.saveAndFlush(user);
+    public ZlUtils add(User user){
+        return userService.saveAndFlush(user);
     }
 
     @GetMapping("/findone")
