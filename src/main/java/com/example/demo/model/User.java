@@ -7,19 +7,6 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age='" + age + '\'' +
-                ", jog='" + jog + '\'' +
-                '}';
-    }
-
-    private static final long serialVersionUID = 1L;
-
     private Integer id;
 
     private String name;
@@ -60,10 +47,6 @@ public class User implements Serializable {
 
     public void setAge(String age) {
         this.age = age;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getJog() {

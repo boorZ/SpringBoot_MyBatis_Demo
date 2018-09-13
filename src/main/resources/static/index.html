@@ -11,26 +11,48 @@
     <div id="app">
         <div align="center">
             <hr>
-            <input type="button" value="ALL"/>
             <button data-toggle="modal" data-target=".add">ADD</button>
-            <button>DEL</button>
             <button>PUT</button>
             <hr>
-            <div>{{datas[0]}}</div>
+            <div>{{datas}}</div>
             <table border="1px" width="500px" style="text-align: center;" align="center">
                 <tr>
                     <th>id</th>
-                    <th>年龄	</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
                     <th>性别</th>
                     <th>人名</th>
+                    <th>操作</th>
                 </tr>
-                <tr v-for="da in datas">
-                    <td>{{da.id}}</td>
-                    <td v-text="da.age"></td>
-                    <td>{{da.sex}}</td>
-                    <td>{{da.jog}}</td>
-                </tr>
+                <tbody id="allTbody">
+                    <tr v-for="da in datas">
+                        <td>{{da.id}}</td>
+                        <td>{{da.name}}</td>
+                        <td v-text="da.age"></td>
+                        <td>{{da.sex}}</td>
+                        <td>{{da.jog}}</td>
+                        <td><button @click="delId(da.id)">DEL</button></td>
+                    </tr>
+                </tbody>
             </table>
+        </div>
+
+        <hr>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" id="progress">
+                <span class="sr-only">{{progress_bar}}% Complete</span>
+            </div>
+        </div>
+        <hr>
+
+        <div align="center">
+
+            <nav aria-label="Page navigation">
+                <ul class="pager">
+                    <li><a href="#" @click="topPage">上一页</a></li>
+                    <li><a href="#" @click="dowPage">下一页</a></li>
+                </ul>
+            </nav>
         </div>
 
         <!-- data-backdrop="static" 禁用空白处点击关闭功能 -->
@@ -82,7 +104,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" @click="add" class="btn btn-primary">保存</button>
+                        <button type="button" @click="add()" class="btn btn-primary">保存</button>
                     </div>
                 </div>
             </div>
@@ -91,21 +113,76 @@
     <script src="vue_learn/js/jquery.min.js"></script>
     <script src="vue_learn/js/vue.js"></script>
     <script src="views/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <script src="index.js"></script>
+    <script src="vue_learn/js/axios.min.js"></script>
+    <!--<script src="index.js"></script>-->
     <script>
         var vmm=new Vue({
             el: "#app",
             data: {
                 datas: [],
+                pageNum:1,
+                pageSize:5,
+                pages : null,
+                progress_bar : 0,
             },
             mounted: function () {
-                zl.all("user/findAll","get");
-                //需要执行的方法可以在mounted中进行触发，其获取的数据可以赋到data中后，可以放在前面进行渲染
+                this.all();
             },
-            methods : {
+            methods:{
+                all(){
+                    axios.get('/user/findAll', {params:{pageNum:this.pageNum, pageSize:this.pageSize}} ).then(function (response) {
+                        vmm.datas = [];
+                        vmm.pages = response.data.pages;
+                        // 内容
+                        for (var i = 0; i < response.data.list.length; i++) {
+                            vmm.datas.push(response.data.list[i]);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                },
+                topPage(){
+                    this.pageNum -= 1;
+                    if ( this.pageNum > 0) {
+                        this.all();
+                    }else {
+                        this.pageNum = 1;
+                    }
+                },
+                dowPage(){
+                    this.pageNum += 1;
+                    if ( this.pageNum <= this.pages) {
+                        this.all();
+                    }else {
+                        this.pageNum = this.pages;
+                    }
+                },
                 add(){
-                   zl.addClick("user/addone",$("#addForm").serialize(),"post");
-                }
+                    axios.post('/user/addone', $("#addForm").serialize()).then(function (response) {
+                        $("#addModal").modal('toggle');
+                        alert(response.data.msg);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                    this.all();
+
+                    /** 清楚表单数据 */
+                    $('#addForm').find('input,select').each(function () {
+                        $(this).val('');
+                    });
+                },
+                delId(da){
+                    if(confirm("确定删除Id：【"+da+"】吗?")){
+                        for (var i=0; i<= 100; i++) {
+//                            i = this.progress_bar;
+                            $("#progress").attr("style","width:"+i+"%");
+                        }
+                        console.log("OK");
+//                        console.log(this.progress_bar);
+                    }else{
+                        console.log(0);
+                    }
+                },
             }
         });
 

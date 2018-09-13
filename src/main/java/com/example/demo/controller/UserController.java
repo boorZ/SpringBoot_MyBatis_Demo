@@ -3,10 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import com.example.type.utils.ZlUtils;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  *
@@ -40,8 +39,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/findAll")
-    public List<User> gets(){
-        return  userService.findAll();
+    public PageInfo<User> gets(int pageNum, int pageSize){
+        pageNum = pageNum == 0 ? 1 : pageNum;
+        pageSize = pageSize == 0 ? 1 : pageSize;
+        return  userService.findAll(pageNum, pageSize);
     }
 
     @DeleteMapping(value = "/deleteone")

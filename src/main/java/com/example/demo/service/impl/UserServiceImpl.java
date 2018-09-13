@@ -4,6 +4,8 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import com.example.type.utils.ZlUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,10 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public List<User> findAll(){
-        return  userMapper.findAll();
+    public PageInfo<User> findAll(int pageNum, int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<User> all = userMapper.findAll();
+        return new PageInfo<>(all);
     }
 
     @Override
