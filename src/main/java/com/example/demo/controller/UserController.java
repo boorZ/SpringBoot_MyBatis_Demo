@@ -39,9 +39,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/findAll")
-    public PageInfo<User> gets(int pageNum, int pageSize){
-        pageNum = pageNum == 0 ? 1 : pageNum;
-        pageSize = pageSize == 0 ? 1 : pageSize;
+    public PageInfo<User> gets(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageSize",defaultValue = "1")int pageSize){
         return  userService.findAll(pageNum, pageSize);
     }
 

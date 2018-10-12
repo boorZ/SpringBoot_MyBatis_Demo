@@ -12,11 +12,12 @@
         <div align="center">
             <hr>
             <button data-toggle="modal" data-target=".add">ADD</button>
-            <button>PUT</button>
+            <button @click="putIds">PUTS</button>
             <hr>
             <div>{{datas}}</div>
             <table border="1px" width="500px" style="text-align: center;" align="center">
                 <tr>
+                    <th>全选<input id="quan" type="checkbox" @click="checkAll()"></th>
                     <th>id</th>
                     <th>姓名</th>
                     <th>年龄</th>
@@ -26,27 +27,23 @@
                 </tr>
                 <tbody id="allTbody">
                     <tr v-for="da in datas">
+                        <td><input class="checkItem" type="checkbox"></td>
                         <td>{{da.id}}</td>
                         <td>{{da.name}}</td>
                         <td v-text="da.age"></td>
                         <td>{{da.sex}}</td>
                         <td>{{da.jog}}</td>
-                        <td><button @click="delId(da.id)">DEL</button></td>
+                        <td>
+                            <button @click="delId(da.id)">DEL</button>
+                            <button @click="putId(da)" data-toggle="modal" data-target=".add">PUT</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <hr>
-        <div class="progress">
-            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" id="progress">
-                <span class="sr-only">{{progress_bar}}% Complete</span>
-            </div>
-        </div>
-        <hr>
-
+        <!-- 分页 -->
         <div align="center">
-
             <nav aria-label="Page navigation">
                 <ul class="pager">
                     <li><a href="#" @click="topPage">上一页</a></li>
@@ -129,6 +126,21 @@
                 this.all();
             },
             methods:{
+                /**  全选 **/
+                checkAll(){ // 点击全选事件函数
+                    var quan = $("#quan").prop('checked');
+                    var isQ = null;
+                    if (quan == true) {
+                        isQ = true;
+                    }else {
+                        isQ = false;
+                    }
+                    $("input:checkbox").each(function(i){
+                        $("input:checkbox").get(i).checked = isQ;
+                    });
+//
+                },
+                /**  查所有带分页 **/
                 all(){
                     axios.get('/user/findAll', {params:{pageNum:this.pageNum, pageSize:this.pageSize}} ).then(function (response) {
                         vmm.datas = [];
@@ -141,6 +153,7 @@
                         console.log(error);
                     });
                 },
+                /**  上一页 **/
                 topPage(){
                     this.pageNum -= 1;
                     if ( this.pageNum > 0) {
@@ -149,6 +162,7 @@
                         this.pageNum = 1;
                     }
                 },
+                /**  下一页 **/
                 dowPage(){
                     this.pageNum += 1;
                     if ( this.pageNum <= this.pages) {
@@ -157,31 +171,48 @@
                         this.pageNum = this.pages;
                     }
                 },
+                /**  添加 **/
                 add(){
                     axios.post('/user/addone', $("#addForm").serialize()).then(function (response) {
                         $("#addModal").modal('toggle');
-                        alert(response.data.msg);
                     }).catch(function (error) {
                         console.log(error);
                     });
                     this.all();
-
                     /** 清楚表单数据 */
                     $('#addForm').find('input,select').each(function () {
                         $(this).val('');
                     });
                 },
+                /**  删除 **/
                 delId(da){
                     if(confirm("确定删除Id：【"+da+"】吗?")){
-                        for (var i=0; i<= 100; i++) {
-//                            i = this.progress_bar;
-                            $("#progress").attr("style","width:"+i+"%");
-                        }
-                        console.log("OK");
-//                        console.log(this.progress_bar);
-                    }else{
-                        console.log(0);
+                        axios.delete('/user/deleteone',{params: {id: da}} ).then(function(){
+                        }).catch (function (error) {
+                            alert(error);
+                        });
                     }
+                    this.all();
+                },
+                /**  更新 **/
+                putId(da) {
+                    $("input[name='name']").val(da.name);
+                    $("input[name='age']").val(da.age);
+
+                    $("input[name='sex']").get(0).checked = false;
+                    $("input[name='sex']").get(1).checked = false;
+                    console.log(da.sex);
+                    if (da.sex == "男") {
+                        $("input[name='sex']").get(0).checked = true;
+                    } else if(da.sex == "女"){
+                        $("input[name='sex']").get(1).checked = true;
+                    }
+                    $("input[name='jog']").val(da.jog);
+
+                },
+                putIds(){
+                    var checkObj = document.querySelectorAll('.checkItem'); // 获取所有checkbox项
+                    console.log($("input:checkbox").prop('checked'));
                 },
             }
         });
